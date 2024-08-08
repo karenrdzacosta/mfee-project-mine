@@ -1,0 +1,27 @@
+<template>
+  <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-center">Login</h5>
+          <form>
+            <div class="form-group pb-3">
+              <label>Username</label>
+              <input type="text" class="form-control is-invalid" />
+              <span class="form-text text-danger"> Error </span>
+            </div>
+            <div class="form-group pb-3">
+              <label>Password</label>
+              <input type="password" class="form-control" />
+              <span class="form-text text-danger"> Error </span>
+            </div>
+
+            <span class="form-text text-danger"> Error </span>
+            <div class="d-flex justify-content-end mt-1">
+              <button class="btn btn-outline-primary me-1">Sign Up</button>
+              <button class="btn btn-primary">Login</button>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>  
+</template>
