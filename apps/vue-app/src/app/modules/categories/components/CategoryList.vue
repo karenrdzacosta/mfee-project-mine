@@ -15,13 +15,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                <th scope="row">1</th>
-                <td>Category name</td>
-                <td>
-                    <i class="fa-solid fa-pen me-3" data-bs-toggle="modal" data-bs-target="#createCategoryModal"></i>
-                    <i class="fa-solid fa-trash"></i>
-                </td>
+                <tr v-for="category in categories">
+                  <th scope="row"> {{ category._id }} </th>
+                  <td> {{ category.name }} </td>
+                  <td>
+                      <i class="fa-solid fa-pen me-3" data-bs-toggle="modal" data-bs-target="#createCategoryModal"></i>
+                      <i class="fa-solid fa-trash"></i>
+                  </td>
                 </tr>
             </tbody>
         </table>
@@ -33,6 +33,24 @@
   export default {
     components: {
         CategoryForm
-    }
+    },
+    data() {
+        return {
+        categories: [
+            {
+            _id: '2',
+            name: 'Category 1'
+            },
+            {
+            _id: '3',
+            name: 'Category 2'
+            },
+            {
+            _id: '4',
+            name: 'Category 3'
+            }
+        ]
+        };
+    },
   };
 </script>

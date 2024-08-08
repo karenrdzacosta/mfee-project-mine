@@ -6,12 +6,12 @@
         <form>
           <div class="form-group pb-3">
             <label>Username</label>
-            <input type="text" class="form-control" />
+            <input v-model="credentials.username" type="text" class="form-control" />
             <span class="form-text text-danger"> Error </span>
           </div>
           <div class="form-group pb-3">
             <label>Password</label>
-            <input type="password" class="form-control" />
+            <input v-model="credentials.password" type="password" class="form-control" />
             <span class="form-text text-danger"> Error </span>
           </div>
           <div class="form-group pb-3">
@@ -28,4 +28,19 @@
     </div>
   </div>  
 </template>   
+<script>
+  export default {
+    name: 'SignUpView',
+    components: {
+    },
+    data() {
+        return {
+          credentials: {
+            username: null,
+            password: null,
+          }
+        };
+    },
+  };
+</script>
   
