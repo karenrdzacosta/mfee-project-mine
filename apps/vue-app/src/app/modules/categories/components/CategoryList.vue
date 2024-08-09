@@ -6,7 +6,7 @@
         </div>
 
         <hr />
-        <table class="table table-striped">
+        <table v-show="thereAreCategories" class="table table-striped">
             <thead>
                 <tr>
                 <th scope="col">#</th>
@@ -19,12 +19,13 @@
                   <th scope="row"> {{ category._id }} </th>
                   <td> {{ category.name }} </td>
                   <td>
-                      <i class="fa-solid fa-pen me-3" data-bs-toggle="modal" data-bs-target="#createCategoryModal"></i>
-                      <i class="fa-solid fa-trash"></i>
+                      <i class="fa-solid fa-pen me-3" data-bs-toggle="modal" data-bs-target="#createCategoryModal" @click="editCategory(category)"></i>
+                      <i class="fa-solid fa-trash" @click="removeCategory(category._id)"></i>
                   </td>
                 </tr>
             </tbody>
         </table>
+        <div class="alert alert-warning m-3" role="alert" v-show="!thereAreCategories">There are no categories.</div>
     </div>
     <CategoryForm />
 </template>
@@ -34,23 +35,36 @@
     components: {
         CategoryForm
     },
+    computed: {
+      thereAreCategories() {
+        return this.categories.length > 0;
+      }
+    },
     data() {
         return {
-        categories: [
-            {
-            _id: '2',
-            name: 'Category 1'
-            },
-            {
-            _id: '3',
-            name: 'Category 2'
-            },
-            {
-            _id: '4',
-            name: 'Category 3'
-            }
-        ]
+            categories: [
+                {
+                _id: '2',
+                name: 'Category 1'
+                },
+                {
+                _id: '3',
+                name: 'Category 2'
+                },
+                {
+                _id: '4',
+                name: 'Category 3'
+                }
+            ]
         };
     },
+    methods: {
+      editCategory(category) {
+          console.log(' EDIT :D ', category);
+      },
+      removeCategory(id) {
+          console.log(' remove D: ', id);
+      }  
+    }
   };
 </script>

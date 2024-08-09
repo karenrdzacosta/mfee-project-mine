@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title text-center">Sign Up</h5>
-        <form>
+        <form @submit.prevent="signUp">
           <div class="form-group pb-3">
             <label>Username</label>
             <input v-model="credentials.username" type="text" class="form-control" />
@@ -21,7 +21,7 @@
           </div>
           <span class="form-text text-danger"> Error </span>
           <div class="d-flex justify-content-center mt-1">
-            <button class="btn btn-primary">Sign Up</button>
+            <button class="btn btn-primary" @click="signUp">Sign Up</button>
           </div>
         </form>
       </div>
@@ -41,6 +41,11 @@
           }
         };
     },
+    methods: {
+      signUp() {
+        console.log('** sign Up ;) **')
+      }
+    }
   };
 </script>
   

@@ -17,8 +17,8 @@
 
             <span class="form-text text-danger"> Error </span>
             <div class="d-flex justify-content-end mt-1">
-              <button class="btn btn-outline-primary me-1">Sign Up</button>
-              <button class="btn btn-primary">Login</button>
+              <button class="btn btn-outline-primary me-1" @click="signUp">Sign Up</button>
+              <button class="btn btn-primary" @click="logIn">Login</button>
             </div>
           </form>
         </div>
@@ -39,5 +39,14 @@
           }
         };
     },
+    methods: {
+      signUp() {
+        console.log('** sign up :) **');
+      },
+      logIn() {
+        console.log('** log In :) **');
+      }
+
+    }
   };
 </script>

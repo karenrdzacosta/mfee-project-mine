@@ -5,7 +5,7 @@
     </form>
   </div>
   <div class="col-md-6">
-    <button class="btn btn-primary mt-2">Add</button>
+    <button class="btn btn-primary mt-2" @click="addNewComment">Add</button>
   </div>
 </template>
 <script>
@@ -18,5 +18,10 @@
           newComment: ''
         };
     },
+    methods: {
+      addNewComment() {
+        console.log('--ADD NEW COMMENT--');
+      }
+    }
   };
 </script>
