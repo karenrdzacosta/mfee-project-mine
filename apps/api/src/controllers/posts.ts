@@ -1,118 +1,120 @@
-const posts = [];
+import Post from '../models/posts';
+import Comment from '../models/comments';
 
-export const getPostById = (id: string) => {
-    return posts.find((p) => p.id === id);
-};
- 
-export const getPostByCategory = (category: string) => {
-    return posts.find((p) => p.category === category);
-};
-
-const getAllPosts = ( req, res ) => {
-    res.status(200).json(posts);
+const getAllPosts = async ( req, res ) => {
+    try {
+        const posts = await Post.find().populate('category');
+        res.status(200).json(posts);
+    } catch (error) {
+        const {message} = error;
+        res.status(500).json({message});
+    }
 }
 
-const getPostsByCategory = (req, res) => {
+const getPostsByCategory = async (req, res) => {
     const category = req.params.category;
- 
-    const post = getPostByCategory(category);
-    if( !post ) {
-        return res.status(404).json({ message: 'Post by category not found' });
-    }
-  
-    res.status(200).json(post);
-}
-
-const getPostsById = (req, res) => {
-    const { id } = req.params;
-    const post = getPostById(id);
-
-    if( !post ) {
-        return res.status(404).json({ message: 'Post by id not found' });
-    }
-  
-    res.status(200).json(post);
-}
-
-const createPost = (req, res) => {
-    const title = req.body.title,
-          image = req.body.image,
-          description = req.body.description,
-          category = req.body.category;
+    try {
+        const post = await Post.find({category: category}).populate('category');
+        if( !post ) {
+            return res.status(404).json({ message: 'Post by category not found' });
+        }
     
-    if( !title || !image || !description || !category ) {
-            return res.status(400).json({ message: 'title, image, description, category are required' });
+        res.status(200).json(post);
+    } catch (error) {
+        const {message} = error;
+        res.status(500).json({message});
     }
- 
-    const newPost = {
-        id: Date.now().toString(),
-        title,
-        image,
-        description,
-        category,
-        comments: []
-    }
- 
-    posts.push(newPost);
-  
-    res.status(201).json(newPost);
+    
 }
 
-const createComment = (req, res) => {
+const getPostsById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const post = await Post.findById(id);
+
+        if( !post ) {
+            return res.status(404).json({ message: 'Post by id not found' });
+        }
+        
+        res.status(200).json(post);
+    } catch (error) {
+        const {message} = error;
+        res.status(500).json({message});
+    }
+    
+}
+
+const createPost = async (req, res) => {
+    try {
+        const post = await Post.create(req.body);
+  
+        res.status(201).json(post);
+    } catch (error) {
+        const {message} = error;
+        res.status(500).json({message});
+    }
+}
+
+const createComment = async (req, res) => {
     const { id } = req.params;
  
-    const author = req.body.author,
-          content = req.body.content;
-    if( !author || !content ) {
-        return res.status(400).json({ message: 'author and contents params are required' });
-    }
- 
-    const post = getPostById(id);
-    if ( !post ) {
-        return res.status(404).json({ message: 'Post not found.' });
-    }
- 
-    const newComment = {
-        id: `comment-${Date.now().toString()}`,
-        author,
-        content
-    }
- 
-    post.comments.push(newComment.id);
+    try {
+        const post = await Post.findById(id);
+        if ( !post ) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+        
+        const comment = await Comment.create(req.body);
+        if ( !comment ) {
+            return res.status(400).json({ message: 'Comment not created' });
+        }
+        post.comments.push(comment._id);
+        await post.save();
   
-    res.status(201).json(newComment);
+        res.status(201).json(post);
+    } catch (error) {
+        const {message} = error;
+        res.status(500).json({message});
+    }
 }
 
-const updatePost = (req, res) => {
+const updatePost = async (req, res) => {
     const { title } = req.body;
     const { id } = req.params;
   
     if (!title) {
       return res.status(400).json({ message: 'Title is required' });  
     }
-  
-    const post = posts.find((p) => p.id === id);
-    if (!post) {
-      return res.status(404).json({ message: 'Post not found' });  
+
+    try {
+        const post = await Post.findByIdAndUpdate(id, {
+            title: req.body.title
+        },
+        {new: true});
+    
+        res.status(200).json(post);
+    } catch (error) {
+        const {message} = error;
+        res.status(500).json({message});
     }
-  
-    post.title = title;
-  
-    return res.status(200).json({ post });
 }
 
-const deletePost = (req, res) => {
+const deletePost = async (req, res) => {
     const { id } = req.params;
- 
-    const post = posts.findIndex((p) => p.id === id);
-  
-    if (post === -1) {
-      return res.status(404).json({ message: 'Post not found' });
+
+    try {
+        const post = await Post.findById(id);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+        await Comment.deleteMany({_id: {$in: post.comments}});
+        const postDeleted = await Post.findByIdAndDelete(id);
+        res.status(204).json(postDeleted);
+    } catch (error) {
+        const {message} = error;
+        res.status(500).json({message});
     }
- 
-    posts.splice(post, 1);
-  
-    res.status(204).send();
 }
 
 export default {
