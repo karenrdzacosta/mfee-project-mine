@@ -3,8 +3,8 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { BannerContent, BannerTitle, Container } from "./Banner.styles";
 
-const postImage = ""; // ACT 1 - Put some image URL
-// const postTitle = ""; //ACT 1 -  Write a title
+const postImage = "https://ts.accenture.com/sites/BrandSpace/Image%20Library/Agribusiness%20-%20GettyImages-613707708.jpg"; // ACT 1 - Put some image URL
+const postTitle = "Welcome To Act 1 from React"; //ACT 1 -  Write a title
 
 function Banner() {
   return (
@@ -14,7 +14,7 @@ function Banner() {
           View Posts
         </Button>
         <BannerTitle variant="h3">
-          {/* ACT 1 - Render postTitle */}
+          {postTitle}
         </BannerTitle>
       </BannerContent>
     </Container>
