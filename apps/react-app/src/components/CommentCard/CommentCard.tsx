@@ -10,15 +10,16 @@ const comment = {
   createdAt: "10/22/2026",
   updatedAt: "10/22/2026",
   __v: "",
-}; // ACT 1 - Fill all the properties with random data
+};
+// ACT 3 - Receive comment prop
 
 function CommentCard() {
   return (
     <Container item sm={8}>
       <AccountCircleIcon />
       <Content>
-        <Author>{comment.author}</Author>
-        <Typography>{comment.content}</Typography>
+        <Author>{/* ACT 1 - Render comment author */}</Author>
+        <Typography>{/* ACT 1 - Render comment content */}</Typography>
       </Content>
     </Container>
   );
