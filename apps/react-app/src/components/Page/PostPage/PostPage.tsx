@@ -6,7 +6,7 @@ import {
 } from "./PostPage.styles";
 
 import Banner from "../../Banner";
-import CommentCard from "../../CommentCard";
+import Comments from "../../Comments";
 
 const post = {
   image: "https://ts.accenture.com/sites/BrandSpace/Image%20Library/Agribusiness%20-%20Brand-Approved-GettyImages-1144627849.jpeg",
@@ -21,6 +21,14 @@ const post = {
       updatedAt: "10/20/2026",
       __v: "",
     },
+    {
+      _id: "002",
+      author: "jon.doe",
+      content: "Hello world!",
+      createdAt: "10/25/2026",
+      updatedAt: "10/25/2026",
+      __v: "",
+    },
   ],
   description: "Description as part of Act 1",
 };
@@ -30,15 +38,13 @@ function PostPage() {
     <Container container>
       Post page
       <BannerContainer item>
-        {/* ACT 1 - Render Banner component */}
-        {/* ACT 3 - Send postImage and postTitle as props to Banner component */}
+        <Banner postTitle="Welcome To Act 1 from React" postImage="https://ts.accenture.com/sites/BrandSpace/Image%20Library/Agribusiness%20-%20GettyImages-613707708.jpg" />
       </BannerContainer>
       <DescriptionContainer item>
-        <p>{/* ACT 1 - Render post description */}</p>
+        <p>{post.description}</p>
       </DescriptionContainer>
       <CommentsContainer item>
-        {/* ACT 1 - Render Comments component */}
-        {/* ACT 3 - Send comments as prop to Comments component */}
+        <Comments comments={post.comments} />
       </CommentsContainer>
     </Container>
   );
