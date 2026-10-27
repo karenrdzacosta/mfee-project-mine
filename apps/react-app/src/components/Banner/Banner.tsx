@@ -3,7 +3,12 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { BannerContent, BannerTitle, Container } from "./Banner.styles";
 
-function Banner(props) {
+interface BannerProps {
+  postTitle: string,
+  postImage: string
+}
+
+function Banner(props: BannerProps) {
   return (
     <Container image={props.postImage}>
       <BannerContent>
