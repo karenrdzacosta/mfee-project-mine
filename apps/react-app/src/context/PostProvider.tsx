@@ -1,4 +1,6 @@
-import React, { createContext, useState, useCallback } from "react";
+import React, { createContext, useState, useCallback, useContext } from "react";
+
+import { SnackbarContext } from "./SnackbarProvider";
 
 import { Post } from "../types";
 
@@ -70,6 +72,12 @@ export function PostProvider({
 }: PostProviderProps): React.JSX.Element {
   const [serverData, setServerData] = useState(postList);
   const [posts, setPosts] = useState<Post[] | null>(postList);
+  const {showSnackbar} = useContext(SnackbarContext);
+
+  const createAlert = (message:string) => {
+    showSnackbar(message);
+  };
+
 
   const getPosts = useCallback(
     (categoryID?: string) => {
@@ -92,7 +100,7 @@ export function PostProvider({
     }) => {
       setServerData((prev) => prev.filter((post: Post) => post.id !== postID));
       getPosts(selectedCategoryID);
-      // ACT 7 - Use createAlert function to notify the user that the item was successfully deleted
+      createAlert('The item was successfully deleted');
     },
     [getPosts]
   );
